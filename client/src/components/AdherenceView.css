@@ -1,0 +1,364 @@
+.adherence-root {
+    margin-bottom: 1.75rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.adherence-kpi-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f6fcf8 100%);
+    border: 1px solid #cce3d8;
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 8px 24px -5px rgba(13, 123, 95, 0.06);
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.kpi-ring-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-ring-box {
+    width: 96px;
+    height: 96px;
+    background: conic-gradient(#10b981 var(--score, 75%), #e2e8f0 0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 12px rgba(16, 185, 129, 0.18);
+}
+
+.progress-circle-outer {
+    width: 76px;
+    height: 76px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.percent-val {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0d7b5f;
+    line-height: 1;
+}
+
+.percent-sub {
+    font-size: 0.65rem;
+    color: #64748b;
+    font-weight: 700;
+    margin-top: 0.15rem;
+}
+
+.kpi-stats-col {
+    flex: 1;
+    min-width: 260px;
+}
+
+.kpi-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.kpi-header-row h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.streak-badge {
+    background: #fff7ed;
+    border: 1px solid #ffedd5;
+    color: #ea580c;
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    border-radius: 16px;
+}
+
+.kpi-tagline {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0 0 1rem 0;
+    line-height: 1.4;
+}
+
+.kpi-pills-row {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.45rem 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.stat-pill .pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.stat-pill.taken .pill-dot { background: #10b981; }
+.stat-pill.skipped .pill-dot { background: #e11d48; }
+.stat-pill.pending .pill-dot { background: #94a3b8; }
+
+.pill-count {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.pill-lbl {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* Timeline Card */
+.adherence-timeline-card {
+    background: #ffffff;
+    border: 1px solid #e2ece4;
+    border-radius: 18px;
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 3px 12px -2px rgba(19, 46, 39, 0.03);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid #f1f5f9;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.timeline-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.live-sync-chip {
+    font-size: 0.74rem;
+    color: #0d7b5f;
+    background: #ecfdf5;
+    padding: 0.25rem 0.55rem;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.timeline-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #64748b;
+}
+
+.empty-clock-icon {
+    font-size: 2.25rem;
+    margin-bottom: 0.35rem;
+}
+
+.timeline-empty p {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 0 0 0.25rem 0;
+}
+
+.timeline-empty span {
+    font-size: 0.82rem;
+}
+
+.timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.timeline-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: all 0.15s;
+}
+
+.timeline-entry.status-taken {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.timeline-entry.status-skipped {
+    background: #fff1f2;
+    border-color: #fecdd3;
+}
+
+.timeline-bullet {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+
+.status-taken .timeline-bullet {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.status-skipped .timeline-bullet {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+.timeline-entry-content {
+    flex: 1;
+}
+
+.entry-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.2rem;
+}
+
+.entry-title-row strong {
+    font-size: 0.92rem;
+    color: #0f172a;
+}
+
+.entry-time {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.entry-sub {
+    font-size: 0.82rem;
+    color: #475569;
+    margin-bottom: 0.45rem;
+}
+
+.entry-status-tag {
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.entry-status-tag.taken {
+    color: #166534;
+}
+
+.entry-status-tag.skipped {
+    color: #9f1239;
+}
+
+/* =========================================================
+   Responsive Breakpoints for AdherenceView
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .adherence-kpi-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem 1.15rem;
+        gap: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .kpi-stats-col {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .kpi-header-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .kpi-header-row h3 {
+        font-size: 1.25rem;
+    }
+
+    .kpi-pills-row {
+        justify-content: center;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        width: 100%;
+    }
+
+    .stat-pill {
+        justify-content: center;
+        padding: 0.65rem 1rem;
+    }
+
+    .adherence-timeline-card {
+        padding: 1.25rem 1rem;
+        border-radius: 20px;
+    }
+
+    .timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .entry-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-ring-box {
+        width: 100px;
+        height: 100px;
+    }
+
+    .progress-circle-outer {
+        width: 80px;
+        height: 80px;
+    }
+
+    .percent-val {
+        font-size: 1.35rem;
+    }
+
+    .timeline-item {
+        padding: 0.85rem 0.65rem;
+    }
+}

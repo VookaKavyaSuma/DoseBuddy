@@ -1,0 +1,339 @@
+.edit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 30, 25, 0.75);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+    padding: 1.5rem;
+    animation: fadeInModal 0.25s ease;
+}
+
+.edit-modal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 1.6rem 1.75rem;
+    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.25);
+    border: 1px solid #d1fae5;
+    position: relative;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.edit-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.edit-header-title h2 {
+    font-size: 1.18rem;
+    color: #0f172a;
+    margin: 0.25rem 0 0 0;
+    font-weight: 800;
+}
+
+.edit-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: 10px;
+    letter-spacing: 0.04em;
+}
+
+.edit-close-btn {
+    background: #f1f5f9;
+    border: none;
+    font-size: 1.05rem;
+    color: #64748b;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.edit-close-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+/* Dual Notification Notice */
+.dual-notification-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid #2563eb;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.15rem;
+}
+
+.dual-notice-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.dual-notice-text {
+    font-size: 0.82rem;
+    color: #1e40af;
+    line-height: 1.45;
+}
+
+.dual-notice-text strong {
+    color: #1e3a8a;
+}
+
+.edit-error-banner {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+.edit-form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.edit-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+}
+
+.edit-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.edit-form-group label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.edit-form-group input {
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.88rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+}
+
+.edit-form-group input:focus {
+    border-color: #0d7b5f;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(13, 123, 95, 0.1);
+}
+
+.freq-input-short {
+    width: 80px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.slots-timing-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.slot-time-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: all 0.15s;
+}
+
+.slot-time-box.active {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.slot-check-lbl {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1e293b;
+    cursor: pointer;
+}
+
+.slot-time-input {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.3rem 0.45rem;
+    font-size: 0.82rem;
+}
+
+.edit-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.delete-modal-btn {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 0.55rem 1rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.84rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.delete-modal-btn:hover:not(:disabled) {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #f87171;
+    transform: translateY(-1px);
+}
+
+.delete-modal-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.edit-modal-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.cancel-edit-btn {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 0.55rem 1.15rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.84rem;
+    cursor: pointer;
+}
+
+.save-edit-btn {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.35rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: all 0.2s;
+}
+
+.save-edit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+/* =========================================================
+   Responsive Breakpoints for EditMedicationModal
+   ========================================================= */
+
+@media (max-width: 640px) {
+    .edit-modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .edit-modal-card {
+        padding: 1.25rem 1rem;
+        width: 100%;
+        max-height: 94vh;
+        border-radius: 20px;
+    }
+
+    .edit-grid-2col {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .slot-times-grid {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+    }
+
+    .freq-selector-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.4rem;
+    }
+
+    .freq-input-short {
+        width: 100%;
+        text-align: center;
+    }
+
+    .freq-pills-row {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .freq-chip {
+        flex: 1;
+        text-align: center;
+    }
+
+    .edit-modal-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .edit-modal-actions-right {
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .delete-modal-btn,
+    .save-edit-btn,
+    .cancel-edit-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}

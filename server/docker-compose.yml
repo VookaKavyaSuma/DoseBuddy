@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: dosebuddy-mysql
+    environment:
+      MYSQL_DATABASE: dosebuddy
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: q1w2e3r4T5@@@
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  spring-app:
+    build: .
+    container_name: dosebuddy-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    environment:
+      - DB_URL=jdbc:mysql://mysql-db:3306/dosebuddy
+      - DB_USERNAME=myuser
+      - DB_PASSWORD=mypassword
+
+volumes:
+  mysql_data:

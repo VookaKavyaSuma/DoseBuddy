@@ -1,0 +1,271 @@
+.reminder-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 30, 25, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 1rem;
+    animation: fadeInModal 0.25s ease;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.reminder-modal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 460px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 20px 50px -12px rgba(13, 123, 95, 0.3);
+    border: 2px solid #a7f3d0;
+    text-align: center;
+    position: relative;
+    animation: scaleInModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+@keyframes scaleInModal {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.reminder-top-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    color: #065f46;
+    padding: 0.3rem 0.8rem;
+    border-radius: 24px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+}
+
+.bell-pulse {
+    font-size: 1rem;
+    animation: bellRing 1.5s infinite;
+}
+
+@keyframes bellRing {
+    0%, 100% { transform: rotate(0); }
+    20% { transform: rotate(15deg); }
+    40% { transform: rotate(-15deg); }
+    60% { transform: rotate(10deg); }
+    80% { transform: rotate(-10deg); }
+}
+
+.reminder-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.reminder-icon-box {
+    font-size: 2.2rem;
+    background: #ffffff;
+    padding: 0.35rem 0.45rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    line-height: 1;
+}
+
+.reminder-title-area h2 {
+    font-size: 1.15rem;
+    color: #1e293b;
+    margin: 0 0 0.2rem 0;
+    font-weight: 800;
+}
+
+.scheduled-tag {
+    font-size: 0.82rem;
+    color: #059669;
+    margin: 0;
+    font-weight: 600;
+}
+
+.reminder-med-info {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.med-primary-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.med-primary-dose {
+    font-size: 0.86rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-top: 0.15rem;
+}
+
+.reminder-instructions-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.instr-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #166534;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.25rem;
+}
+
+.instr-value {
+    font-size: 0.88rem;
+    color: #14532d;
+    font-weight: 700;
+}
+
+.gentle-tip {
+    font-size: 0.78rem;
+    color: #64748b;
+    background: #fafaf9;
+    border-radius: 10px;
+    padding: 0.5rem 0.85rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+.reminder-actions-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.reminder-take-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    cursor: pointer;
+    box-shadow: 0 6px 16px -3px rgba(16, 185, 129, 0.35);
+    transition: all 0.2s ease;
+}
+
+.reminder-take-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -3px rgba(16, 185, 129, 0.45);
+}
+
+.reminder-skip-btn {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reminder-skip-btn:hover {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+.reminder-footer-notes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.35rem;
+}
+
+.chime-replay-btn, .dismiss-link {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.15s;
+}
+
+.chime-replay-btn:hover, .dismiss-link:hover {
+    color: #0f172a;
+}
+
+/* =========================================================
+   Responsive Breakpoints for ReminderAlertModal
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .reminder-modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .reminder-modal-card {
+        padding: 1.5rem 1rem;
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .reminder-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .reminder-icon-box {
+        font-size: 2.5rem;
+    }
+
+    .reminder-med-info {
+        text-align: center;
+    }
+
+    .med-primary-name {
+        font-size: 1.2rem;
+    }
+
+    .reminder-actions-row {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+    }
+
+    .reminder-take-btn,
+    .reminder-skip-btn {
+        width: 100%;
+        padding: 0.85rem 1rem;
+    }
+
+    .reminder-footer-notes {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+}

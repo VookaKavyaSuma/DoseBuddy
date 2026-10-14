@@ -1,0 +1,107 @@
+.caregiver-toast-card {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 9999;
+    max-width: 380px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    box-shadow: 0 10px 30px -4px rgba(13, 123, 95, 0.18), 0 3px 10px rgba(0, 0, 0, 0.06);
+    border: 1px solid #cce3d8;
+    border-left: 4px solid #0d7b5f;
+    animation: toastSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.caregiver-toast-card.skip {
+    border-left-color: #e11d48;
+    background: #fff5f5;
+}
+
+.caregiver-toast-card.refill {
+    border-left-color: #d97706;
+    background: #fffbeb;
+}
+
+@keyframes toastSlideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.toast-icon-wrap {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.toast-text-wrap {
+    flex: 1;
+}
+
+.toast-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #132e27;
+    margin-bottom: 0.2rem;
+}
+
+.toast-timestamp {
+    font-size: 0.68rem;
+    color: #718096;
+    font-weight: 500;
+}
+
+.toast-msg {
+    font-size: 0.82rem;
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    line-height: 1.35;
+}
+
+.toast-recipient {
+    font-size: 0.7rem;
+    color: #4a5568;
+}
+
+.toast-dismiss-btn {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #a0aec0;
+    cursor: pointer;
+    padding: 0.2rem;
+    line-height: 1;
+    transition: color 0.15s;
+}
+
+.toast-dismiss-btn:hover {
+    color: #1a202c;
+}
+
+/* =========================================================
+   Responsive Breakpoints for CaregiverNotificationToast
+   ========================================================= */
+
+@media (max-width: 640px) {
+    .caregiver-toast-card {
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        max-width: calc(100vw - 2rem);
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+    }
+}
