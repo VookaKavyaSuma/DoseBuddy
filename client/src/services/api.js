@@ -1,4 +1,15 @@
-const REACT_APP_BACKEND_URL = 'dose-buddy.vercel.app';
+const RAW_BACKEND_URL =
+    (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.REACT_APP_BACKEND_URL || import.meta.env.VITE_BACKEND_URL)) ||
+    (typeof process !== 'undefined' && process.env && (process.env.REACT_APP_BACKEND_URL || process.env.VITE_BACKEND_URL)) ||
+    'https://dosebuddy-backend-jved.onrender.com/api';
+
+const normalizeBackendUrl = (url) => {
+    const trimmed = (url || '').trim().replace(/\/+$/, '');
+    if (!trimmed) return 'https://dosebuddy-backend-jved.onrender.com/api';
+    return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+};
+
+export const REACT_APP_BACKEND_URL = normalizeBackendUrl(RAW_BACKEND_URL);
 const TOKEN_KEY = 'dosebuddy_token';
 const USER_KEY = 'dosebuddy_user';
 
@@ -148,7 +159,7 @@ export const fetchMedicationsApi = async (category = '') => {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const url = category ? `${REACT_APP_BACKEND_URL}/medications?category=${encodeURIComponent(category)}` : `${API_BASE_URL}/medications`;
+    const url = category ? `${REACT_APP_BACKEND_URL}/medications?category=${encodeURIComponent(category)}` : `${REACT_APP_BACKEND_URL}/medications`;
     const response = await fetch(url, { headers });
     if (!response.ok) {
         throw new Error('Failed to fetch medications');
