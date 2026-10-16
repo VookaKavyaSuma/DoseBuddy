@@ -33,6 +33,15 @@ export const clearAuthData = () => {
     localStorage.removeItem(USER_KEY);
 };
 
+export const getAuthHeaders = (additionalHeaders = {}) => {
+    const token = getStoredToken();
+    const headers = { ...additionalHeaders };
+    if (token && !token.startsWith('mock_')) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+};
+
 export const loginApi = async (usernameOrEmail, password) => {
     const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/login`, {
         method: 'POST',
@@ -75,6 +84,9 @@ export const demoLoginApi = async (role = 'CAREGIVER') => {
 };
 
 export const fetchProfileApi = async (token) => {
+    if (!token || token.startsWith('mock_')) {
+        throw new Error('Invalid or demo token');
+    }
     const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/me`, {
         method: 'GET',
         headers: {
@@ -82,6 +94,11 @@ export const fetchProfileApi = async (token) => {
             'Content-Type': 'application/json',
         },
     });
+
+    if (response.status === 401) {
+        clearAuthData();
+        throw new Error('Session expired');
+    }
 
     if (!response.ok) {
         const data = await response.json().catch(() => ({}));
@@ -91,15 +108,18 @@ export const fetchProfileApi = async (token) => {
 };
 
 export const sendChatMessageApi = async (message, conversationId) => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/chat`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ message, conversationId })
     });
+
+    if (response.status === 401) {
+        clearAuthData();
+        throw new Error('Session expired. Please sign in again.');
+    }
 
     if (!response.ok) {
         const err = await response.json().catch(() => ({}));
@@ -137,9 +157,7 @@ export const uploadPrescriptionPdfApi = async (file, conversationId) => {
         formData.append('conversationId', conversationId);
     }
 
-    const token = getStoredToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders();
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/rag/upload`, {
         method: 'POST',
@@ -155,12 +173,14 @@ export const uploadPrescriptionPdfApi = async (file, conversationId) => {
 };
 
 export const fetchMedicationsApi = async (category = '') => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const url = category ? `${REACT_APP_BACKEND_URL}/medications?category=${encodeURIComponent(category)}` : `${REACT_APP_BACKEND_URL}/medications`;
     const response = await fetch(url, { headers });
+    if (response.status === 401) {
+        clearAuthData();
+        throw new Error('Session expired. Please sign in again.');
+    }
     if (!response.ok) {
         throw new Error('Failed to fetch medications');
     }
@@ -168,15 +188,18 @@ export const fetchMedicationsApi = async (category = '') => {
 };
 
 export const createMedicationApi = async (medicationData) => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications`, {
         method: 'POST',
         headers,
         body: JSON.stringify(medicationData)
     });
+
+    if (response.status === 401) {
+        clearAuthData();
+        throw new Error('Session expired. Please sign in again.');
+    }
 
     const data = await response.json();
     if (!response.ok) {
@@ -186,9 +209,7 @@ export const createMedicationApi = async (medicationData) => {
 };
 
 export const takeMedicationDoseApi = async (id, timeSlot = 'TODAY', scheduledTime = '') => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}/take`, {
         method: 'POST',
@@ -203,9 +224,7 @@ export const takeMedicationDoseApi = async (id, timeSlot = 'TODAY', scheduledTim
 };
 
 export const skipMedicationDoseApi = async (id, reason = 'Patient skipped dose', timeSlot = 'TODAY', scheduledTime = '') => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}/skip`, {
         method: 'POST',
@@ -220,9 +239,7 @@ export const skipMedicationDoseApi = async (id, reason = 'Patient skipped dose',
 };
 
 export const createBatchMedicationsApi = async (medicationsList) => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/batch`, {
         method: 'POST',
@@ -237,9 +254,7 @@ export const createBatchMedicationsApi = async (medicationsList) => {
 };
 
 export const fetchDoseLogsApi = async (date = '') => {
-    const token = getStoredToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders();
 
     const url = date ? `${REACT_APP_BACKEND_URL}/medications/logs?date=${encodeURIComponent(date)}` : `${REACT_APP_BACKEND_URL}/medications/logs`;
     const response = await fetch(url, { headers });
@@ -258,9 +273,7 @@ export const scanPrescriptionApi = async (file = null, presetId = '') => {
         formData.append('presetId', presetId);
     }
 
-    const token = getStoredToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders();
 
     const query = presetId ? `?presetId=${encodeURIComponent(presetId)}` : '';
     const response = await fetch(`${REACT_APP_BACKEND_URL}/prescriptions/scan${query}`, {
@@ -285,9 +298,7 @@ export const fetchPrescriptionSamplesApi = async () => {
 };
 
 export const updateMedicationApi = async (id, medicationData) => {
-    const token = getStoredToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}`, {
         method: 'PUT',
@@ -303,9 +314,7 @@ export const updateMedicationApi = async (id, medicationData) => {
 };
 
 export const fetchNotificationsApi = async (role = '') => {
-    const token = getStoredToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders();
 
     const url = role ? `${REACT_APP_BACKEND_URL}/medications/notifications?role=${encodeURIComponent(role)}` : `${REACT_APP_BACKEND_URL}/medications/notifications`;
     const response = await fetch(url, { headers });
@@ -316,9 +325,7 @@ export const fetchNotificationsApi = async (role = '') => {
 };
 
 export const markNotificationReadApi = async (id) => {
-    const token = getStoredToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders();
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/notifications/${id}/read`, {
         method: 'POST',
@@ -331,9 +338,7 @@ export const markNotificationReadApi = async (id) => {
 };
 
 export const deleteMedicationApi = async (id) => {
-    const token = getStoredToken();
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const headers = getAuthHeaders();
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}`, {
         method: 'DELETE',
@@ -345,6 +350,3 @@ export const deleteMedicationApi = async (id) => {
     }
     return await response.json();
 };
-
-
-

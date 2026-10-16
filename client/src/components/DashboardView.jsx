@@ -24,7 +24,7 @@ import CaregiverNotificationToast from './CaregiverNotificationToast';
 import './DashboardView.css';
 
 export default function DashboardView() {
-    const { user, token } = useAuth();
+    const { user, token, logout } = useAuth();
     const isCaregiver = user?.role === 'CAREGIVER';
 
     // Language state: 'en', 'es', 'hi', 'fr'
@@ -75,7 +75,7 @@ export default function DashboardView() {
     }, []);
 
     // Load medications & dose logs
-    const loadData = useCallback(async () => {
+    const loadData = useCallback(async (retryAttempt = 0) => {
         try {
             setIsLoading(true);
             setLoadError(null);
@@ -89,11 +89,22 @@ export default function DashboardView() {
             if (Array.isArray(notifsData)) setNotifications(notifsData);
         } catch (err) {
             console.error('Failed to load data:', err);
-            setLoadError('Unable to connect to DoseBuddy server. Please check your backend connection.');
+            const msg = err?.message || '';
+            if (msg.includes('Session expired') || msg.includes('401')) {
+                setLoadError('Your session has expired. Please log in again.');
+                if (logout) logout();
+            } else {
+                setLoadError('Connecting to DoseBuddy server... (Render free tier may take ~30-50s to wake up on first load)');
+                if (retryAttempt < 2) {
+                    setTimeout(() => {
+                        loadData(retryAttempt + 1);
+                    }, 4000);
+                }
+            }
         } finally {
             setIsLoading(false);
         }
-    }, []);
+    }, [logout]);
 
     useEffect(() => {
         loadData();
@@ -453,7 +464,10 @@ export default function DashboardView() {
                 {loadError && (
                     <div className="meds-error-banner">
                         <span>⚠️ {loadError}</span>
-                        <button onClick={loadData} className="retry-btn">Retry Connection</button>
+                        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                            <button onClick={() => loadData(0)} className="retry-btn">Retry Connection</button>
+                            <button onClick={logout} className="retry-btn" style={{ background: '#d33838' }}>Sign Out & Re-login</button>
+                        </div>
                     </div>
                 )}
 

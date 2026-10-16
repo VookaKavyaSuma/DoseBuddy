@@ -27,20 +27,21 @@ export const AuthProvider = ({ children }) => {
                 return;
             }
 
+            // If stored token is an offline demo/mock token, clear it to connect cleanly to real backend
+            if (savedToken.startsWith('mock_')) {
+                clearAuth();
+                setIsLoading(false);
+                return;
+            }
+
             try {
                 const profile = await fetchProfileApi(savedToken);
                 setUser(profile);
                 setToken(savedToken);
                 setAuthData(savedToken, profile);
             } catch (err) {
-                console.warn('Backend offline or invalid token, preserving offline session if available:', err);
-                const cachedUser = getStoredUser();
-                if (cachedUser) {
-                    setUser(cachedUser);
-                    setToken(savedToken);
-                } else {
-                    clearAuth();
-                }
+                console.warn('Session verification failed or token invalid, resetting auth:', err);
+                clearAuth();
             } finally {
                 setIsLoading(false);
             }
