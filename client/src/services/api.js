@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api';
+const REACT_APP_BACKEND_URL = 'dose-buddy.vercel.app';
 const TOKEN_KEY = 'dosebuddy_token';
 const USER_KEY = 'dosebuddy_user';
 
