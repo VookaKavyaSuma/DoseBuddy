@@ -23,7 +23,7 @@ export const clearAuthData = () => {
 };
 
 export const loginApi = async (usernameOrEmail, password) => {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usernameOrEmail, password }),
@@ -37,7 +37,7 @@ export const loginApi = async (usernameOrEmail, password) => {
 };
 
 export const registerApi = async (formData) => {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -51,7 +51,7 @@ export const registerApi = async (formData) => {
 };
 
 export const demoLoginApi = async (role = 'CAREGIVER') => {
-    const response = await fetch(`${API_BASE_URL}/auth/demo-login?role=${role}`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/demo-login?role=${role}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
     });
@@ -64,7 +64,7 @@ export const demoLoginApi = async (role = 'CAREGIVER') => {
 };
 
 export const fetchProfileApi = async (token) => {
-    const response = await fetch(`${API_BASE_URL}/auth/me`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/me`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -84,7 +84,7 @@ export const sendChatMessageApi = async (message, conversationId) => {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/chat`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/chat`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ message, conversationId })
@@ -100,7 +100,7 @@ export const sendChatMessageApi = async (message, conversationId) => {
 export const fetchChatHistoryApi = async (conversationId) => {
     if (!conversationId) return [];
     try {
-        const response = await fetch(`${API_BASE_URL}/chat/history/${encodeURIComponent(conversationId)}`);
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/chat/history/${encodeURIComponent(conversationId)}`);
         if (!response.ok) return [];
         return await response.json();
     } catch {
@@ -111,7 +111,7 @@ export const fetchChatHistoryApi = async (conversationId) => {
 export const clearChatHistoryApi = async (conversationId) => {
     if (!conversationId) return;
     try {
-        await fetch(`${API_BASE_URL}/chat/history/${encodeURIComponent(conversationId)}`, {
+        await fetch(`${REACT_APP_BACKEND_URL}/chat/history/${encodeURIComponent(conversationId)}`, {
             method: 'DELETE'
         });
     } catch (e) {
@@ -130,7 +130,7 @@ export const uploadPrescriptionPdfApi = async (file, conversationId) => {
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/rag/upload`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/rag/upload`, {
         method: 'POST',
         headers,
         body: formData
@@ -148,7 +148,7 @@ export const fetchMedicationsApi = async (category = '') => {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const url = category ? `${API_BASE_URL}/medications?category=${encodeURIComponent(category)}` : `${API_BASE_URL}/medications`;
+    const url = category ? `${REACT_APP_BACKEND_URL}/medications?category=${encodeURIComponent(category)}` : `${API_BASE_URL}/medications`;
     const response = await fetch(url, { headers });
     if (!response.ok) {
         throw new Error('Failed to fetch medications');
@@ -161,7 +161,7 @@ export const createMedicationApi = async (medicationData) => {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications`, {
         method: 'POST',
         headers,
         body: JSON.stringify(medicationData)
@@ -179,7 +179,7 @@ export const takeMedicationDoseApi = async (id, timeSlot = 'TODAY', scheduledTim
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications/${id}/take`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}/take`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ timeSlot, scheduledTime })
@@ -196,7 +196,7 @@ export const skipMedicationDoseApi = async (id, reason = 'Patient skipped dose',
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications/${id}/skip`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}/skip`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ reason, timeSlot, scheduledTime })
@@ -213,7 +213,7 @@ export const createBatchMedicationsApi = async (medicationsList) => {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications/batch`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/batch`, {
         method: 'POST',
         headers,
         body: JSON.stringify(medicationsList)
@@ -230,7 +230,7 @@ export const fetchDoseLogsApi = async (date = '') => {
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const url = date ? `${API_BASE_URL}/medications/logs?date=${encodeURIComponent(date)}` : `${API_BASE_URL}/medications/logs`;
+    const url = date ? `${REACT_APP_BACKEND_URL}/medications/logs?date=${encodeURIComponent(date)}` : `${REACT_APP_BACKEND_URL}/medications/logs`;
     const response = await fetch(url, { headers });
     if (!response.ok) {
         return [];
@@ -252,7 +252,7 @@ export const scanPrescriptionApi = async (file = null, presetId = '') => {
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     const query = presetId ? `?presetId=${encodeURIComponent(presetId)}` : '';
-    const response = await fetch(`${API_BASE_URL}/prescriptions/scan${query}`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/prescriptions/scan${query}`, {
         method: 'POST',
         headers,
         body: file ? formData : undefined
@@ -266,7 +266,7 @@ export const scanPrescriptionApi = async (file = null, presetId = '') => {
 };
 
 export const fetchPrescriptionSamplesApi = async () => {
-    const response = await fetch(`${API_BASE_URL}/prescriptions/samples`);
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/prescriptions/samples`);
     if (!response.ok) {
         return [];
     }
@@ -278,7 +278,7 @@ export const updateMedicationApi = async (id, medicationData) => {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications/${id}`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}`, {
         method: 'PUT',
         headers,
         body: JSON.stringify(medicationData)
@@ -296,7 +296,7 @@ export const fetchNotificationsApi = async (role = '') => {
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const url = role ? `${API_BASE_URL}/medications/notifications?role=${encodeURIComponent(role)}` : `${API_BASE_URL}/medications/notifications`;
+    const url = role ? `${REACT_APP_BACKEND_URL}/medications/notifications?role=${encodeURIComponent(role)}` : `${REACT_APP_BACKEND_URL}/medications/notifications`;
     const response = await fetch(url, { headers });
     if (!response.ok) {
         return [];
@@ -309,7 +309,7 @@ export const markNotificationReadApi = async (id) => {
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications/notifications/${id}/read`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/notifications/${id}/read`, {
         method: 'POST',
         headers
     });
@@ -324,7 +324,7 @@ export const deleteMedicationApi = async (id) => {
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${API_BASE_URL}/medications/${id}`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}`, {
         method: 'DELETE',
         headers
     });
