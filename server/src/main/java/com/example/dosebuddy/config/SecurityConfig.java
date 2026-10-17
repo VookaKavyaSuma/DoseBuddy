@@ -17,6 +17,12 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final AppProperties appProperties;
+
+    public SecurityConfig(AppProperties appProperties) {
+        this.appProperties = appProperties;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -25,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // 2. Extracted CORS configuration to a dedicated method below
+            // Dynamic CORS configuration using centralized application properties
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             
             .csrf(csrf -> csrf.disable())
@@ -42,11 +48,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 3. Proper URL-based CORS configuration setup
+    // Dynamic URL-based CORS configuration setup reading from AppProperties
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000", "https://dose-buddy.vercel.app"));
+        List<String> origins = appProperties.getCorsAllowedOriginsList();
+        config.setAllowedOrigins(origins);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/medications")
-@CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000", "https://dose-buddy.vercel.app"})
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class MedicationController {
 
     private final MedicationRepository medicationRepository;

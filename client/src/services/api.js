@@ -1,15 +1,7 @@
-const RAW_BACKEND_URL =
-    (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.REACT_APP_BACKEND_URL || import.meta.env.VITE_BACKEND_URL)) ||
-    (typeof process !== 'undefined' && process.env && (process.env.REACT_APP_BACKEND_URL || process.env.VITE_BACKEND_URL)) ||
-    'https://dosebuddy-backend-jved.onrender.com/api';
+import { API_BASE_URL, FRONTEND_URL, REACT_APP_BACKEND_URL } from '../config/env';
 
-const normalizeBackendUrl = (url) => {
-    const trimmed = (url || '').trim().replace(/\/+$/, '');
-    if (!trimmed) return 'https://dosebuddy-backend-jved.onrender.com/api';
-    return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
-};
+export { API_BASE_URL, FRONTEND_URL, REACT_APP_BACKEND_URL };
 
-export const REACT_APP_BACKEND_URL = normalizeBackendUrl(RAW_BACKEND_URL);
 const TOKEN_KEY = 'dosebuddy_token';
 const USER_KEY = 'dosebuddy_user';
 
@@ -43,7 +35,7 @@ export const getAuthHeaders = (additionalHeaders = {}) => {
 };
 
 export const loginApi = async (usernameOrEmail, password) => {
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/login`, {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usernameOrEmail, password }),
@@ -57,7 +49,7 @@ export const loginApi = async (usernameOrEmail, password) => {
 };
 
 export const registerApi = async (formData) => {
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/register`, {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -71,7 +63,7 @@ export const registerApi = async (formData) => {
 };
 
 export const demoLoginApi = async (role = 'CAREGIVER') => {
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/demo-login?role=${role}`, {
+    const response = await fetch(`${API_BASE_URL}/auth/demo-login?role=${role}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
     });
@@ -87,7 +79,7 @@ export const fetchProfileApi = async (token) => {
     if (!token || token.startsWith('mock_')) {
         throw new Error('Invalid or demo token');
     }
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/auth/me`, {
+    const response = await fetch(`${API_BASE_URL}/auth/me`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -110,7 +102,7 @@ export const fetchProfileApi = async (token) => {
 export const sendChatMessageApi = async (message, conversationId) => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/chat`, {
+    const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ message, conversationId })
@@ -131,7 +123,7 @@ export const sendChatMessageApi = async (message, conversationId) => {
 export const fetchChatHistoryApi = async (conversationId) => {
     if (!conversationId) return [];
     try {
-        const response = await fetch(`${REACT_APP_BACKEND_URL}/chat/history/${encodeURIComponent(conversationId)}`);
+        const response = await fetch(`${API_BASE_URL}/chat/history/${encodeURIComponent(conversationId)}`);
         if (!response.ok) return [];
         return await response.json();
     } catch {
@@ -142,7 +134,7 @@ export const fetchChatHistoryApi = async (conversationId) => {
 export const clearChatHistoryApi = async (conversationId) => {
     if (!conversationId) return;
     try {
-        await fetch(`${REACT_APP_BACKEND_URL}/chat/history/${encodeURIComponent(conversationId)}`, {
+        await fetch(`${API_BASE_URL}/chat/history/${encodeURIComponent(conversationId)}`, {
             method: 'DELETE'
         });
     } catch (e) {
@@ -159,7 +151,7 @@ export const uploadPrescriptionPdfApi = async (file, conversationId) => {
 
     const headers = getAuthHeaders();
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/rag/upload`, {
+    const response = await fetch(`${API_BASE_URL}/rag/upload`, {
         method: 'POST',
         headers,
         body: formData
@@ -175,7 +167,7 @@ export const uploadPrescriptionPdfApi = async (file, conversationId) => {
 export const fetchMedicationsApi = async (category = '') => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const url = category ? `${REACT_APP_BACKEND_URL}/medications?category=${encodeURIComponent(category)}` : `${REACT_APP_BACKEND_URL}/medications`;
+    const url = category ? `${API_BASE_URL}/medications?category=${encodeURIComponent(category)}` : `${API_BASE_URL}/medications`;
     const response = await fetch(url, { headers });
     if (response.status === 401) {
         clearAuthData();
@@ -190,7 +182,7 @@ export const fetchMedicationsApi = async (category = '') => {
 export const createMedicationApi = async (medicationData) => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications`, {
+    const response = await fetch(`${API_BASE_URL}/medications`, {
         method: 'POST',
         headers,
         body: JSON.stringify(medicationData)
@@ -211,7 +203,7 @@ export const createMedicationApi = async (medicationData) => {
 export const takeMedicationDoseApi = async (id, timeSlot = 'TODAY', scheduledTime = '') => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}/take`, {
+    const response = await fetch(`${API_BASE_URL}/medications/${id}/take`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ timeSlot, scheduledTime })
@@ -226,7 +218,7 @@ export const takeMedicationDoseApi = async (id, timeSlot = 'TODAY', scheduledTim
 export const skipMedicationDoseApi = async (id, reason = 'Patient skipped dose', timeSlot = 'TODAY', scheduledTime = '') => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}/skip`, {
+    const response = await fetch(`${API_BASE_URL}/medications/${id}/skip`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ reason, timeSlot, scheduledTime })
@@ -241,7 +233,7 @@ export const skipMedicationDoseApi = async (id, reason = 'Patient skipped dose',
 export const createBatchMedicationsApi = async (medicationsList) => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/batch`, {
+    const response = await fetch(`${API_BASE_URL}/medications/batch`, {
         method: 'POST',
         headers,
         body: JSON.stringify(medicationsList)
@@ -256,7 +248,7 @@ export const createBatchMedicationsApi = async (medicationsList) => {
 export const fetchDoseLogsApi = async (date = '') => {
     const headers = getAuthHeaders();
 
-    const url = date ? `${REACT_APP_BACKEND_URL}/medications/logs?date=${encodeURIComponent(date)}` : `${REACT_APP_BACKEND_URL}/medications/logs`;
+    const url = date ? `${API_BASE_URL}/medications/logs?date=${encodeURIComponent(date)}` : `${API_BASE_URL}/medications/logs`;
     const response = await fetch(url, { headers });
     if (!response.ok) {
         return [];
@@ -276,7 +268,7 @@ export const scanPrescriptionApi = async (file = null, presetId = '') => {
     const headers = getAuthHeaders();
 
     const query = presetId ? `?presetId=${encodeURIComponent(presetId)}` : '';
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/prescriptions/scan${query}`, {
+    const response = await fetch(`${API_BASE_URL}/prescriptions/scan${query}`, {
         method: 'POST',
         headers,
         body: file ? formData : undefined
@@ -290,7 +282,7 @@ export const scanPrescriptionApi = async (file = null, presetId = '') => {
 };
 
 export const fetchPrescriptionSamplesApi = async () => {
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/prescriptions/samples`);
+    const response = await fetch(`${API_BASE_URL}/prescriptions/samples`);
     if (!response.ok) {
         return [];
     }
@@ -300,7 +292,7 @@ export const fetchPrescriptionSamplesApi = async () => {
 export const updateMedicationApi = async (id, medicationData) => {
     const headers = getAuthHeaders({ 'Content-Type': 'application/json' });
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/medications/${id}`, {
         method: 'PUT',
         headers,
         body: JSON.stringify(medicationData)
@@ -316,7 +308,7 @@ export const updateMedicationApi = async (id, medicationData) => {
 export const fetchNotificationsApi = async (role = '') => {
     const headers = getAuthHeaders();
 
-    const url = role ? `${REACT_APP_BACKEND_URL}/medications/notifications?role=${encodeURIComponent(role)}` : `${REACT_APP_BACKEND_URL}/medications/notifications`;
+    const url = role ? `${API_BASE_URL}/medications/notifications?role=${encodeURIComponent(role)}` : `${API_BASE_URL}/medications/notifications`;
     const response = await fetch(url, { headers });
     if (!response.ok) {
         return [];
@@ -327,7 +319,7 @@ export const fetchNotificationsApi = async (role = '') => {
 export const markNotificationReadApi = async (id) => {
     const headers = getAuthHeaders();
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/notifications/${id}/read`, {
+    const response = await fetch(`${API_BASE_URL}/medications/notifications/${id}/read`, {
         method: 'POST',
         headers
     });
@@ -340,7 +332,7 @@ export const markNotificationReadApi = async (id) => {
 export const deleteMedicationApi = async (id) => {
     const headers = getAuthHeaders();
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/medications/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/medications/${id}`, {
         method: 'DELETE',
         headers
     });

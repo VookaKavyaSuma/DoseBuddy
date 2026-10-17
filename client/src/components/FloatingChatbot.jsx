@@ -6,6 +6,7 @@ import {
     clearChatHistoryApi, 
     uploadPrescriptionPdfApi 
 } from '../services/api';
+import { API_BASE_URL } from '../config/env';
 import './FloatingChatbot.css';
 
 export default function FloatingChatbot() {
@@ -119,7 +120,7 @@ export default function FloatingChatbot() {
                 ...prev,
                 {
                     role: 'ai',
-                    content: `⚠️ **Notice:** ${error.message || 'Unable to reach backend service.'}\n\nPlease check if your Spring Boot server is running on port 8080.`,
+                    content: `⚠️ **Notice:** ${error.message || 'Unable to reach backend service.'}\n\nPlease check if your backend service is running and reachable at ${API_BASE_URL}.`,
                     timestamp: new Date().toISOString(),
                     isError: true
                 }
