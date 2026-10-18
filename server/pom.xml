@@ -63,10 +63,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
             <scope>test</scope>
         </dependency>
 
-        <!-- If using Spring AI's community/standard Gemini client -->
+        <!-- Spring AI Gemini Model -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-google-genai-spring-boot-starter</artifactId>
+            <artifactId>spring-ai-vertex-ai-gemini-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
