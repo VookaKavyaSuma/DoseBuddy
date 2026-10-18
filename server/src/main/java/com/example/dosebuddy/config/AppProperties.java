@@ -13,7 +13,7 @@ public class AppProperties {
 
     private String frontendUrl = "http://localhost:5173";
     private String corsAllowedOrigins = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,https://dose-buddy.vercel.app";
-    private String backendBaseUrl = "http://localhost:8080";
+    private String backendBaseUrl = "http://localhost:8080,https://dosebuddy-backend-jved.onrender.com";
 
     public String getFrontendUrl() {
         return frontendUrl;
